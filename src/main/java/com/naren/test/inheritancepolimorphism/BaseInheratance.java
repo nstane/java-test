@@ -40,7 +40,7 @@ public class BaseInheratance {
 	}
 	
 	public void print(int integer){
-		
+		System.out.println("Print int "+integer);
 	}
 
 }

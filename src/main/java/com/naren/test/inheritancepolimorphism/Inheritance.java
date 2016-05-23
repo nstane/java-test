@@ -27,8 +27,8 @@ public class Inheritance extends BaseInheratance{
 		BaseInheratance inheritance = new Inheritance();
 		//if we pass null will show ambiguous error without integer method it will print null if we pass null
 		//The method print(String) is ambiguous for the type Inheritance
-		((Inheritance) inheritance).print(123);
-		//inheritance.call();
+		((Inheritance) inheritance).print(new Object());
+		inheritance.call();
 		//BaseInheratance base = new BaseInheratance();
 	}
 	
