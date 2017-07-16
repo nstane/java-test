@@ -11,12 +11,19 @@ import java.sql.SQLException;
  */
 public class BaseInheratance {
 
+	static{
+		System.out.println("Base static");
+	}
+	
+	{
+		System.out.println("base init");
+	}
 	/**
 	 * 
 	 */
 	public BaseInheratance() {
-		this.get();
-		//this("Base");
+		//this.get();
+		this("Base");
 		System.out.println("Base  cons ");
 	}
 	

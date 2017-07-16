@@ -25,7 +25,7 @@ public class TestBlockingQueue {
 	 */
 	public static void main(String[] args) throws InterruptedException {
 		 
-		BlockingQueue<String> bq = new ArrayBlockingQueue<String>(1024);
+		final BlockingQueue<String> bq = new ArrayBlockingQueue<String>(1024);
 		//Producer Thread
 		Thread thread1 = new Thread (new Runnable(){
 			@Override

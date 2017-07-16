@@ -3,6 +3,13 @@ package com.naren.test.inheritancepolimorphism;
 public class InheritanceTest {
 
 	public static void main(String... a) {
+		inheritanceTest();
+	}
+
+	/**
+	 * 
+	 */
+	private static void inheritanceTest() {
 		A aa = new A();
 		A b = new B();
 		A c = new C();
