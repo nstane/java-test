@@ -29,6 +29,9 @@ public class Test {
 	static int i = 10;
 	private static final String STR = "Test {userName} if you can ? ";
 
+	private enum Type{
+	    Day,Week,Year;
+	}
 	/**
 	 * 
 	 */
@@ -44,6 +47,8 @@ public class Test {
 		// test21();
 
 		List list = new ArrayList<>();
+		
+		Type type = Type.Day;
 
 		list.add("12");// 12
 		list.add(Arrays.asList(new String[] { "12", "34", "55" }));// [12]
