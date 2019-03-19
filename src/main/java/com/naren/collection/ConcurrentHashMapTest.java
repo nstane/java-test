@@ -39,7 +39,7 @@ public class ConcurrentHashMapTest {
 		Set<Employee> employeeSet = new HashSet<Employee>();
 		employeeSet.add(new Employee(123,"Narender",23));
 		employeeSet.add(new Employee(123,"Narender",23));
-		System.out.println(employeeSet);
+		System.out.println(employeeSet.size());
 	}
 
 }
@@ -139,7 +139,4 @@ class Employee{
 		}
 		return true;
 	}
-	
-	
-	
 }

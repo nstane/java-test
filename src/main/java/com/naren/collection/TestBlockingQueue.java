@@ -57,8 +57,8 @@ public class TestBlockingQueue {
 		});
 		thread1.start();
 		thread2.start();
-//		thread1.join();
-//		thread2.join();
+		thread1.join();
+		thread2.join();
 		System.out.println("End program");
 	}
 

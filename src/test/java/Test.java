@@ -1,7 +1,10 @@
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -29,9 +32,10 @@ public class Test {
 	static int i = 10;
 	private static final String STR = "Test {userName} if you can ? ";
 
-	private enum Type{
-	    Day,Week,Year;
+	private enum Type {
+		Day, Week, Year;
 	}
+
 	/**
 	 * 
 	 */
@@ -46,18 +50,49 @@ public class Test {
 	public static void main(String[] args) throws InterruptedException {
 		// test21();
 
-		List list = new ArrayList<>();
-		
-		Type type = Type.Day;
+		// List list = new ArrayList<>();
+		//
+		// Type type = Type.Day;
+		//
+		// list.add("12");// 12
+		// list.add(Arrays.asList(new String[] { "12", "34", "55" }));// [12]
+		//
+		// list.add(Arrays.asList(Arrays.asList(new String[] { "12", "34", "55"
+		// }).toArray()));// [12,[12],[[12]]]
+		//
+		// System.out.println(list);
+		// flatList(list);
+		String isoDate = "2018-09-18T09:59:51.312Z";
+		try {
+			ZonedDateTime date = ZonedDateTime.parse(isoDate, DateTimeFormatter.ISO_ZONED_DATE_TIME);
+			// System.out.println(date);
 
-		list.add("12");// 12
-		list.add(Arrays.asList(new String[] { "12", "34", "55" }));// [12]
+			Instant instant = Instant.now();
+			ZonedDateTime currentDateTime = instant.atZone(ZoneId.of("GMT+00:00"));
+			// ZonedDateTime date2 = ZonedDateTime.now();
+			// System.out.println(date2);
 
-		list.add(Arrays.asList(Arrays.asList(new String[] { "12", "34", "55" }).toArray()));// [12,[12],[[12]]]
+			long milis = ChronoUnit.MILLIS.between(date, currentDateTime);
 
-		System.out.println(list);
-		flatList(list);
+			System.out.println(milis);
+			System.out.println(currentDateTime.toInstant().toString());
 
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		System.out.println(getTitle());
+
+	}
+
+	public static String getTitle() {
+		for (i = 0; i < 5; i++) {
+			if (i == 3) {
+				System.out.println(i);
+				return "3";
+			}
+		}
+		return "-1";
 	}
 
 	private static void flatList(Object obj) {
@@ -177,6 +212,7 @@ public class Test {
 	void m() {
 		System.out.println(Test.i);
 	}
+
 }
 
 class A {
