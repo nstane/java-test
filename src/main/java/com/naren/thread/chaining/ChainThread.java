@@ -48,12 +48,21 @@ public class ChainThread {
 		Thread t2 = new Thread(run2);
 		Thread t3 = new Thread(run3);
 		
-		t3.start();
+		/*t3.start();
 		t3.join();
 		t2.start();
 		t2.join();
 		t1.start();
+		t1.join();*/
+
+		t3.start();
+		t2.start();
+		t1.start();
+
+		t3.join();
+		t2.join();
 		t1.join();
+
 		System.out.println(Thread.currentThread().getName());
 	}
 

@@ -42,12 +42,16 @@ public class BaseInheratance {
 		System.out.println("base call");
 	}
 	
-	public void throwExcetion() throws SQLException, Exception{
+	public void throwExcetion() throws SQLException{
 		
 	}
 	
-	public void print(int integer){
+	public void print(Integer integer){
 		System.out.println("Print int "+integer);
 	}
 
+	protected Long getInt()
+	{
+		return 0l;
+	}
 }

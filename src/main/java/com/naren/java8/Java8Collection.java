@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.naren.others.Person;
 
@@ -22,57 +23,13 @@ import com.naren.others.Person;
  *
  */
 public class Java8Collection {
-	private static List<Integer> list = new ArrayList<Integer>() {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -2939880373417477170L;
-
-		{
-			add(1);
-			add(2);
-			add(3);
-			add(10);
-			add(5);
-			add(8);
-			add(5);
-		}
-	};
-	private static List<Person> persons = new LinkedList<Person>() {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1249367500359764048L;
-
-		{
-			add(new Person("Naren", "Singh", 28, "Male"));
-			add(new Person("Amita", "P", 29, "Female"));
-			add(new Person("Gajju", "N", 30, "Male"));
-		}
-	};
-	private static LinkedHashMap<String, Person> personsMap = new LinkedHashMap<String, Person>() {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -1107855095661995258L;
-
-		{
-			put("1", new Person("Naren", "Singh", 28, "Male"));
-			put("2", new Person("Amita", "P", 29, "Female"));
-			put("3", new Person("Gajju", "N", 30, "Male"));
-		}
-	};
-	private static Map<String, String> map = new HashMap<String, String>() {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -7156176687430418014L;
-
-		{
-			put("Hello", "Naren");
-			put("Bye", "Naren1");
-		}
-	};
+	private static List<Integer> list = Arrays.asList(1,2,5,9,3);
+	private static List<Person> persons = Arrays.asList(new Person("Naren", "Singh", 28, "Male"),
+			new Person("Amita", "P", 29, "Female"),
+            new Person("Amita", "P1", 18, "Female"),
+			new Person("Gajju", "N", 30, "Male"));
+	private static Map<String, Person> personsMap = getPersonMap();
+	private static Map<String, String> map = getStringMap();
 	private static List<String> myList = Arrays.asList("area", "block", "building", "city", "country");
 
 	/**
@@ -90,24 +47,38 @@ public class Java8Collection {
 		print(persons);
 		// count element
 		Integer count = (int) list.stream().map(Integer::intValue).count();
+		Integer multiply = IntStream.rangeClosed(1,5).reduce(1,(a,b)-> a*b); //multiply = 120;
+		Integer sumOf = IntStream.rangeClosed(1,5).reduce(0,(a,b)-> a+b); //sum = 15;
+		String reduceStringArrays = myList.stream().reduce("start",(a,b)-> a+","+b);
+		String reduceStringArrays2 = myList.stream().collect(Collectors.joining(","));
+
+		System.out.println("Mux of 1..5 = " + multiply);
+		System.out.println("Sum of 1..5 = " + sumOf);
+		System.out.println("reduceStringArrays : "+reduceStringArrays+" other joining : "+ reduceStringArrays2);
+
 		// sum of element
-		Integer sum = (int) list.stream().map(Integer::intValue).mapToInt(Integer::intValue).sum();
+		Integer sum = (int) list.stream().mapToInt(Integer::intValue).sum();
+
 		// find average
-		OptionalDouble ave = list.stream().map(Integer::intValue).mapToInt(Integer::intValue).average();
+		OptionalDouble ave = list.stream().mapToInt(Integer::intValue).average();
 		System.out.println("Sum : " + sum + " Count : " + count + " ave " + ave);
+
 		// shorting
 		Comparator<Integer> normal = Integer::compare;
 		Comparator<Integer> reversed = normal.reversed();
 		Collections.sort(list, normal);
 		System.out.println(list);
+
 		// short reverse
 		Collections.sort(list, reversed);
 		System.out.println(list);
+
 		// short list
 		myList.stream().filter(s -> s.startsWith("c")).map(String::toUpperCase).sorted().forEach(System.out::println);
-		Comparator<Person> pComp = (e1, e2) -> {
-			return e1.getfName().compareTo(e2.getfName());
-		};
+
+		//compare multiple property
+		Comparator<Person> pComp = Comparator.comparing(Person::getfName).thenComparingInt(Person::getAge).thenComparing(Person::getGender);
+
 		Collections.sort(persons, pComp);
 		System.out.println("Sorted persons : " + persons);
 		Arrays.sort("Narender singh".replace("\\s", "").toCharArray());
@@ -139,16 +110,32 @@ public class Java8Collection {
 	}
 
 	public static void print(List<Person> persons) {
-		persons.stream().filter(p -> p.getAge() >= 29).forEach(p -> System.out.println(p));
-		OptionalDouble averageAge = persons.stream().filter(p -> p.getAge() >= 29).mapToInt(p -> p.getAge()).average();
+		persons.stream().filter(p -> p.getAge() >= 29).forEach(System.out::println);
+		OptionalDouble averageAge = persons.stream().filter(p -> p.getAge() >= 29).mapToInt(Person::getAge).average();
 		System.out.println(averageAge.isPresent() ? averageAge.getAsDouble() : "0");
-	}
-
-	public static LinkedHashMap<String, Person> getPersonsMap() {
-		return personsMap;
 	}
 
 	public static void setPersonsMap(LinkedHashMap<String, Person> personsMap) {
 		Java8Collection.personsMap = personsMap;
+	}
+
+	public static Map<String, Person> getPersonMap()
+	{
+		Map<String, Person> personMap = new LinkedHashMap<String, Person>();
+		personMap.put("1", new Person("Naren", "Singh", 28, "Male"));
+		personMap.put("2", new Person("Amita", "Jain", 29, "Female"));
+        personMap.put("3", new Person("Neeta", "Sain", 29, "Female"));
+        personMap.put("4", new Person("Joe", "D", 29, "Male"));
+		personMap.put("5", new Person("Gajju", "N", 30, "Male"));
+        personMap.put("5", new Person("Gajju", "N", 30, "Female"));
+		return personMap;
+	}
+
+	private static Map<String, String> getStringMap()
+	{
+		Map<String, String> stringMap = new HashMap<String, String>();
+		stringMap.put("Hello", "Naren");
+		stringMap.put("Bye", "Naren1");
+		return stringMap;
 	}
 }

@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author Narender Singh
@@ -36,12 +38,12 @@ public class OnlineTest {
 	public static void main(String[] args) {
 		 
 		Arrays.asList(args).forEach(e -> System.out.println());
-		// array sort based on no frequency.
+		// 1.... array sort based on no frequency.
+
 		List<Integer> list = Arrays.asList(2, 1, 5, 5, 2, 1, 2, 3, 3, 4, 4, 6);
 		Map<Integer, Integer> map = new HashMap<>();
-		// getting frequency map or 12) How to count occurrences of each
-		// character in a string in java? or 4) How to find duplicate characters
-		// in a string in java?
+
+		// A.. Create Frequency Map
 		for (Integer i : list) {
 			if (map.containsKey(i)) {
 				Integer counter = map.get(i);
@@ -53,25 +55,15 @@ public class OnlineTest {
 		}
 		System.out.println(map);
 		List<Entry<Integer, Integer>> sortedEntries = new ArrayList<Entry<Integer, Integer>>(map.entrySet());
-		// Comparator<Entry<Integer,Integer>> normal =
-		// Entry<Integer,Integer>::getValue;
-		Collections.sort(sortedEntries, new Comparator<Entry<Integer, Integer>>() {
-			@Override
-			public int compare(Entry<Integer, Integer> e1, Entry<Integer, Integer> e2) {
-				return e2.getValue().compareTo(e1.getValue());
-			}
-		});
-		List<Integer> resultList = new LinkedList<>();
-		for (Entry<Integer, Integer> entry : sortedEntries) {
-			for (int a = 0; a < entry.getValue(); a++) {
-				resultList.add(entry.getKey());
-			}
-		}
-		int[] array = new int[resultList.size()];
-		for (int i = 0; i < list.size(); i++)
-			array[i] = list.get(i);
-		System.out.println(resultList);
-		System.out.println(array.toString());
+
+		//B.. Create comparator with Accending order
+		Comparator<Entry<Integer, Integer>> compareByValue = Comparator.comparing(Entry::getValue);
+
+		//C.. Sort Entry by decending order
+ 		Collections.sort(sortedEntries, compareByValue.reversed());
+
+		System.out.println(sortedEntries.stream().map(e-> e.getKey()).collect(Collectors.toList()));
+
 		// 2....reverse
 
 		String str = "This is good";

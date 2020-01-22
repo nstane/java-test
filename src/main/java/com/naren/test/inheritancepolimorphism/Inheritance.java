@@ -3,6 +3,8 @@
  */
 package com.naren.test.inheritancepolimorphism;
 
+import java.sql.SQLException;
+
 /**
  * @author nstanwar
  *
@@ -31,7 +33,9 @@ public class Inheritance extends BaseInheratance{
 	 */
 	public static void main(String[] args) {
 		 
-		BaseInheratance inheritance = new Inheritance();
+		//Can't cast parent to child will raise class cast exception on runtime.
+		Inheritance inheritance = (Inheritance) new BaseInheratance();
+		inheritance.print("");
 		//if we pass null will show ambiguous error without integer method it will print null if we pass null
 		//The method print(String) is ambiguous for the type Inheritance
 		//((Inheritance) inheritance).print(new Object());
@@ -62,7 +66,14 @@ public class Inheritance extends BaseInheratance{
 		System.out.println("cjhild call");
 	}
 	
-	public void throwExcetion() throws Exception{
+	//Parent will have same of higher exception 
+	public void throwExcetion() throws SQLException{
 		
+	}
+	
+	@Override
+	public Long getInt()
+	{
+		return (long) 0;
 	}
 }

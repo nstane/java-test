@@ -17,8 +17,11 @@ public class SuplierConsumer {
 		System.out.println("Orignal Detail : " + supplier.get());
 	
 		Consumer<String> consumer1 = (test) -> {
-          System.out.println(test);
-        };
+			System.out.println(test);
+		};
+		//OR
+		Consumer<String> consumer2 = System.out::println;
+		
         consumer1.accept("Test consumer");
 	}
 }
